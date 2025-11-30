@@ -62,13 +62,12 @@ Clients **cannot**:
 - Spawn items or players
 
 Clients only send:
-```json
 {
   "type": "input",
   "keys": { "up": true, "left": false, ... }
 }
 
-The server:
+###The server:
 
 Processes movement
 
@@ -81,7 +80,7 @@ if dist < PLAYER_RADIUS + COIN_RADIUS:
 
 Sends back authoritative state snapshots.
 
-2. Tick Loop (Server Side)
+##2. Tick Loop (Server Side)
 
 The server runs at 20 ticks/sec:
 
@@ -95,7 +94,7 @@ Build state message
 
 Send to all clients (after artificial delay)
 
-3. Interpolation (Client Side)
+##3. Interpolation (Client Side)
 
 For every remote player:
 
@@ -115,7 +114,7 @@ x_draw = x_prev + (x - x_prev) * alpha
 
 This produces smooth motion even with delayed updates.
 
-4. Client-Side Prediction (Local Player Only)
+##4. Client-Side Prediction (Local Player Only)
 
 Your own player moves instantly in response to input.
 When server state arrives later:
@@ -127,8 +126,8 @@ x_draw += (server_x - x_draw) * 0.15
 
 This keeps the game responsive even with added latency.
 
-🛠 Installation
-1. Create & activate virtual environment (optional but recommended):
+###🛠 Installation
+#1. Create & activate virtual environment (optional but recommended):
 python -m venv venv
 
 Windows:
@@ -137,7 +136,7 @@ venv\Scripts\activate
 macOS / Linux:
 source venv/bin/activate
 
-2. Install dependencies
+#2. Install dependencies
 pip install pygame
 
 
@@ -145,8 +144,8 @@ Or if requirements.txt is added:
 
 pip install -r requirements.txt
 
-▶️ Running the Game
-Step 1: Start the server
+###▶️ Running the Game
+#Step 1: Start the server
 python server.py
 
 
@@ -155,7 +154,7 @@ Expected output:
 [SERVER] Starting on 127.0.0.1:9000
 [SERVER] Waiting for connections ...
 
-Step 2: Run a client (Player 1)
+#Step 2: Run a client (Player 1)
 
 In a new terminal:
 
@@ -164,7 +163,7 @@ python client.py
 
 A Pygame window will open.
 
-Step 3: Run more clients (Player 2, Player 3…)
+#Step 3: Run more clients (Player 2, Player 3…)
 
 Open another terminal:
 
@@ -173,7 +172,7 @@ python client.py
 
 Each client represents a different player.
 
-🎮 Controls
+###🎮 Controls
 
 Inside each Pygame window:
 
@@ -190,8 +189,8 @@ Other players = blue squares
 Coins = yellow circles
 
 Score shown in the top-left.
-📊 Evaluation Criteria Mapping
-✔ Server Authority
+###📊 Evaluation Criteria Mapping
+##✔ Server Authority
 
 Server handles all movement, collisions, scoring.
 
@@ -199,11 +198,11 @@ Client only sends inputs.
 
 Server state is canonical.
 
-✔ 200ms Latency Simulation
+##✔ 200ms Latency Simulation
 
 Custom sleep() injected into incoming & outgoing server messages.
 
-✔ Smooth Rendering (Interpolation)
+##✔ Smooth Rendering (Interpolation)
 
 Remote entities are interpolated between server snapshots.
 
